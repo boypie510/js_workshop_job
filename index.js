@@ -26,8 +26,23 @@ window.addEventListener("DOMContentLoaded", function () {
       "https://still-spire-37210.herokuapp.com/positions.json?" +
       searchParams.toString();
 
-    const response = await fetch(searchUrl
+    const response = await fetch(searchUrl);
     const posts = await response.json();
     console.log(posts);
+    let template = document.querySelector("template");
+    let table = document.querySelector("#job-pannel");
+    table.innerHTML = "";
+    let itemTitle = template.content.querySelector("h4>a");
+    let itemCompany = template.content.querySelector(".company");
+    let itemLocation = template.content.querySelector(".location");
+    let itemFulltime = template.content.querySelector(".fulltime");
+    posts.forEach((post) => {
+      itemTitle.textContent = post.title;
+      itemCompany.textContent = post.company;
+      itemLocation.textContent = post.location;
+      itemFulltime.textContent = post.type;
+      let clone = document.importNode(template.content, true);
+      table.appendChild(clone);
+    });
   });
 });
